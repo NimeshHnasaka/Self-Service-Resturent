@@ -1,0 +1,53 @@
+.SecondScreenContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .SecondScreenContainer h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .CapturedImageContainer {
+    margin-bottom: 20px;
+  }
+  
+  .CapturedImageContainer img {
+    max-width: 300px; /* Set maximum width for the image */
+    height: auto; /* Maintain aspect ratio */
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .CapturedImageContainer img:hover {
+    transform: scale(1.1);
+  }
+  
+  .DetectedObjectsContainer {
+    max-width: 600px;
+  }
+  
+  .DetectedObjectsContainer h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .DetectedObjectsContainer ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .DetectedObjectsContainer ul li {
+    font-size: 16px;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .DetectedObjectsContainer ul li:hover {
+    color: #007bff;
+  }

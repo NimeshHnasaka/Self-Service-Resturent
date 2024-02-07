@@ -1,0 +1,12 @@
+.first-screen-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .welcome-message {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
