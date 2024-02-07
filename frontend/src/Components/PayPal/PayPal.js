@@ -2,7 +2,9 @@ import React from 'react'
 
 function PayPal() {
   return (
-    <div>PayPal</div>
+    <div>
+      <h1>PayPal Payment</h1>
+    </div>
   )
 }
 
