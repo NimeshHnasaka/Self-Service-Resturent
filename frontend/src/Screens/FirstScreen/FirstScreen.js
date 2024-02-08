@@ -1,15 +1,13 @@
-import React from 'react';
-import './FirstScreen.css'; // Import the CSS file for styling
-import CaptureImage from '../../Components/CaptureImage/CaptureImage';
+// import React from 'react';
+// import './FirstScreen.css'; // Import the CSS file for styling
+// import CaptureImage from '../../Components/CaptureImage/CaptureImage';
 
-function FirstScreen() {
-  return (
-    <div className="first-screen-container">
-      
+// function FirstScreen() {
+//   return (
+//     <div className="first-screen-container">
+//       <CaptureImage />
+//     </div>
+//   );
+// }
 
-      <CaptureImage />
-    </div>
-  );
-}
-
-export default FirstScreen;
+// export default FirstScreen;

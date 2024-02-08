@@ -1,17 +1,35 @@
-// import React from 'react';
 
-// const TotalBill = ({ detectedObjects, objectPrices }) => {
-//     // Function to calculate total bill
-//     const calculateTotalBill = () => {
-//         let totalBill = 0;
-//         detectedObjects.forEach(object => {
-//             const price = objectPrices[object];
-//             if (price) {
-//                 totalBill += price;
-//             }
-//         });
-//         return totalBill.toFixed(2); // Round to 2 decimal places
+
+// import React, { useState } from 'react';
+
+// import Payment from '../PayPal/Payment';
+
+// const TotalBill = ({ objectQuantity }) => {
+
+//     // Mapping of detected objects to prices
+//     const objectPrices = {
+//         tv: 1.5,
+//         keyboard: 0.75,
+//         donut: 10.00,
+//         pizza: 20.00
+//         // Add more objects and their prices as needed
 //     };
+
+//     // Function to calculate total bill
+//     const calculateTotalBill = (objectQuantity) => {
+//         let bill = 0;
+//         for (const object in objectQuantity) {
+//             const quantity = objectQuantity[object];
+//             const price = objectPrices[object];
+//             const totalPrice = quantity * price;
+//             console.log(`${object} - Quantity: ${quantity}`); // Log food items and their quantities
+//             bill += totalPrice;
+//         }
+//         return bill.toFixed(2); // Ensure the bill is rounded to two decimal places
+//     };
+
+//     // Calculate the total bill
+//     const totalBill = calculateTotalBill(objectQuantity);
 
 //     // Function to generate a reference number with date and time
 //     const generateReferenceNumber = () => {
@@ -22,71 +40,71 @@
 //         return prefix + formattedDate + numericString;
 //     };
 
+//     // State to store the reference number
+//     const referenceNumber = useState(generateReferenceNumber())[0];
+
 //     // Function to handle confirm button click
 //     const handleConfirmClick = () => {
-//         // Here you can implement the logic for what should happen when the confirm button is clicked
-//         // For now, let's console log the data
-//         const totalBill = calculateTotalBill();
-//         const referenceNumber = generateReferenceNumber();
-//         console.log("Detected Objects:", detectedObjects);
-//         console.log("Object Prices:", objectPrices);
 //         console.log("Total Bill:", totalBill);
 //         console.log("Reference Number:", referenceNumber);
+//         console.log("Order Confirmed");
 //     };
 
 //     return (
-//         <div>
-//             <h2>Total Bill: ${calculateTotalBill()}</h2>
-//             <p>Reference Number: {generateReferenceNumber()}</p>
-//             <button onClick={handleConfirmClick}>Confirm My Order</button>
-//         </div>
+//         <>
+//             <div>
+//                 <h1>Total Bill </h1>
+//                 <h2>Food Items</h2>
+//                 <ul>
+//                     {Object.entries(objectQuantity).map(([object, quantity]) => (
+//                         <li key={object}>
+//                             {object} -  Price: ${objectPrices[object]} - Quantity: {quantity} - Total: ${(quantity * objectPrices[object]).toFixed(2)}
+//                         </li>
+//                     ))}
+//                 </ul>
+//                 <h2>Total Bill: ${totalBill}</h2>
+//                 <p>Reference Number: {referenceNumber}</p>
+//                 <button onClick={handleConfirmClick}>Confirm My Order</button>
+//             </div>
+
+// <Payment/>
+
+//         </>
 //     );
 // };
 
 // export default TotalBill;
 
 
-
-
 import React, { useState } from 'react';
-import ThirdScreen from '../../Screens/ThiredScreen/ThiredScreen';
- // Assuming ThirdScreen component is in the same directory
+import Payment from '../PayPal/Payment'; // Assuming Payment component is imported correctly
 
-const TotalBill = ({ detectedObjects, objectPrices }) => {
-   
-   
-   
-  // Function to count the occurrences of each detected object
-  const countObjectQuantity = () => {
-    const objectQuantity = {};
-    detectedObjects.forEach(object => {
-        objectQuantity[object] = (objectQuantity[object] || 0) + 1;
-    });
-    return objectQuantity;
-};
+const TotalBill = ({ objectQuantity }) => {
+    const [orderConfirmed, setOrderConfirmed] = useState(false);
 
-
-   
-   
-   
-    const [confirmed, setConfirmed] = useState(false);
-    
-    
-    const objectQuantity = countObjectQuantity();
-    // Function to calculate total bill
-    const calculateTotalBill = () => {
-        let totalBill = 0;
-        detectedObjects.forEach(object => {
-            const price = objectPrices[object];
-            const quantity = objectQuantity[object];
-            
-            
-            if (price) {
-                totalBill += price * quantity ;
-            }
-        });
-        return totalBill.toFixed(2); // Round to 2 decimal places
+    // Mapping of detected objects to prices
+    const objectPrices = {
+        tv: 1.5,
+        keyboard: 0.75,
+        donut: 10.00,
+        pizza: 20.00
+        // Add more objects and their prices as needed
     };
+
+    // Function to calculate total bill
+    const calculateTotalBill = (objectQuantity) => {
+        let bill = 0;
+        for (const object in objectQuantity) {
+            const quantity = objectQuantity[object];
+            const price = objectPrices[object];
+            const totalPrice = quantity * price;
+            bill += totalPrice;
+        }
+        return bill.toFixed(2); // Ensure the bill is rounded to two decimal places
+    };
+
+    // Calculate the total bill
+    const totalBill = calculateTotalBill(objectQuantity);
 
     // Function to generate a reference number with date and time
     const generateReferenceNumber = () => {
@@ -97,31 +115,38 @@ const TotalBill = ({ detectedObjects, objectPrices }) => {
         return prefix + formattedDate + numericString;
     };
 
+    // State to store the reference number
+    const [referenceNumber] = useState(generateReferenceNumber());
+
     // Function to handle confirm button click
     const handleConfirmClick = () => {
-        // Here you can implement the logic for what should happen when the confirm button is clicked
-        // For now, let's set confirmed to true
-        setConfirmed(true);
+        console.log("Total Bill:", totalBill);
+        console.log("Reference Number:", referenceNumber);
+        console.log("Order Confirmed");
+        setOrderConfirmed(true); // Set order confirmed to true
     };
 
-    if (confirmed) {
-        const totalBill = calculateTotalBill();
-        const referenceNumber = generateReferenceNumber();
-        return (
-            <ThirdScreen
-                detectedObjects={detectedObjects}
-                objectPrices={objectPrices}
-                totalBill={totalBill}
-                referenceNumber={referenceNumber}
-            />
-        );
-    }
-
     return (
-        <div>
-            <h2>Total Bill: ${calculateTotalBill()}</h2>
-            <button onClick={handleConfirmClick}>Confirm</button>
-        </div>
+        <>
+            {!orderConfirmed ? (
+                <div>
+                    <h1>Total Bill </h1>
+                    <h2>Food Items</h2>
+                    <ul>
+                        {Object.entries(objectQuantity).map(([object, quantity]) => (
+                            <li key={object}>
+                                {object} -  Price: ${objectPrices[object]} - Quantity: {quantity} - Total: ${(quantity * objectPrices[object]).toFixed(2)}
+                            </li>
+                        ))}
+                    </ul>
+                    <h2>Total Bill: ${totalBill}</h2>
+                    <p>Reference Number: {referenceNumber}</p>
+                    <button onClick={handleConfirmClick}>Confirm My Order</button>
+                </div>
+            ) : (
+                <Payment totalBill={totalBill} referenceNumber={referenceNumber} />
+            )}
+        </>
     );
 };
 

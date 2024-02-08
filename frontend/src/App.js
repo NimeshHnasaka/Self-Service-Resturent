@@ -1,14 +1,13 @@
 
 import './App.css';
-import FirstScreen from './Screens/FirstScreen/FirstScreen';
+import CaptureImage from './Components/CaptureImage/CaptureImage';
+//import FirstScreen from './Screens/FirstScreen/FirstScreen';
 
 
 function App() {
   return (
     <div className="App">
-
-
-     <FirstScreen/>
+    <CaptureImage/>
     </div>
   );
 }

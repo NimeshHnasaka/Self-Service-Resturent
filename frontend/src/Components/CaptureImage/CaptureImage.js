@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import SecondScreen from '../../Screens/SecondScreen/SecondScreen';
+
 import './CaptureImage.css'; // Import the CSS file for styling
+import ObjectDetection from '../ObjectDetection/ObjectDetection';
+
 
 
 
@@ -9,15 +11,15 @@ const CaptureImage = () => {
     const webcamRef = useRef(null);
     const [capturedImage, setCapturedImage] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [showSecondScreen, setShowSecondScreen] = useState(false);
+    const [ showObjectDetection,setShowObjectDetection] = useState(false);
 
     const capture = async () => {
         setLoading(true);
         //const imageSrc = webcamRef.current.getScreenshot();
-        const imageSrc = '/pizza.jpg';
+        const imageSrc = '/donut.jpg';
         setCapturedImage(imageSrc );
         setLoading(false);
-        setShowSecondScreen(true); // Show the second screen
+        setShowObjectDetection(true); // Show the second screen
     };
 
     return (
@@ -26,8 +28,8 @@ const CaptureImage = () => {
            
            
            
-            {showSecondScreen ? ( // Render the second screen if showSecondScreen is true
-                <SecondScreen capturedImage={capturedImage} />
+            {showObjectDetection ? ( // Render the second screen if showSecondScreen is true
+                <ObjectDetection capturedImage={capturedImage} />
             ) : (
                 <div>
 
@@ -55,7 +57,7 @@ const CaptureImage = () => {
                     {loading ? (
                         <p className="loading-text">Capturing image...</p>
                     ) : (
-                        <button className="capture-button" onClick={capture}>Capture Image</button>
+                        <button className="capture-button"  onClick={capture}>Capture Image</button>
                     )}
                 </div>
             )}

@@ -1,37 +1,46 @@
 
 
-import React from 'react';
-
-import './SecondScreen.css'; // Import the CSS file
-import ObjectDetection from '../../Components/ObjectDetection/ObjectDetection';
 
 
-
-const SecondScreen = ({ capturedImage}) => {
+// const SecondScreen = ({ capturedImage}) => {
 
     
-    return (
-        <div className="SecondScreenContainer">
-          
-            {/* Display the captured image */}
-            {capturedImage && (
-                <div className="CapturedImageContainer">
-                    <h2>Captured Image:</h2>
-                    <img src={capturedImage} alt="Captured" />
-                </div>
-            )}
-            {/* Render the ObjectDetection component with the capturedImage prop */}
-            <ObjectDetection capturedImage={capturedImage} />
-           {/* Display total bill */}
+//     return (
+//         <div className="SecondScreenContainer">
+//           <h1>Second Screen</h1>
+//             {/* Display the captured image */}
+//             {capturedImage && (
+//                 <div className="CapturedImageContainer">
+//                     <h2>Captured Image:</h2>
+//                     <img src={capturedImage} alt="Captured" />
+//                 </div>
+//             )}
+//             {/* Render the ObjectDetection component with the capturedImage prop */}
+//             <ObjectDetection capturedImage={capturedImage} />
+//            {/* Display total bill */}
            
 
 
-        </div>
-    );
-};
+//         </div>
+//     );
+// };
 
-export default SecondScreen;
-
-
+// export default SecondScreen;
 
 
+
+
+// const SecondScreen = () => {
+
+    
+//     return (
+//    <div>
+       
+//         <ObjectDetection/>
+       
+
+//         </div>
+//     );
+// };
+
+// export default SecondScreen;
