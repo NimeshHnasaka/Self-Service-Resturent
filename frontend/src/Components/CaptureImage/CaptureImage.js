@@ -14,7 +14,7 @@ const CaptureImage = () => {
     const capture = async () => {
         setLoading(true);
         //const imageSrc = webcamRef.current.getScreenshot();
-        const imageSrc = '/computer.jpg';
+        const imageSrc = '/pizza.jpg';
         setCapturedImage(imageSrc );
         setLoading(false);
         setShowSecondScreen(true); // Show the second screen
@@ -22,11 +22,28 @@ const CaptureImage = () => {
 
     return (
         <div className="capture-image-container">
-            <h1 className="header">Webcam Image Capture</h1>
+            
+           
+           
+           
             {showSecondScreen ? ( // Render the second screen if showSecondScreen is true
                 <SecondScreen capturedImage={capturedImage} />
             ) : (
                 <div>
+
+
+
+<h1 className="welcome-message">Welcome!</h1>
+      <h1 className="header">Webcam Image Capture</h1>
+           
+           
+      <h1 className="">Put Your Tray Here</h1>
+
+
+
+
+
+
                     <div className="webcam-container">
                         <Webcam
                             audio={false}
@@ -47,3 +64,4 @@ const CaptureImage = () => {
 };
 
 export default CaptureImage;
+

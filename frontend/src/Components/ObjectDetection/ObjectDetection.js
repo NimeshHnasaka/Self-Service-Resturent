@@ -44,8 +44,9 @@ const ObjectDetection = ({ capturedImage }) => {
 
  // Mapping of detected objects to prices
  const objectPrices = {
-    tv: 1.5,
-    keyboard: 0.75,
+    //tv: 1.5,
+    //keyboard: 0.75,
+    pizza:20.00
     
     // Add more objects and their prices as needed
 };
@@ -66,18 +67,21 @@ const ObjectDetection = ({ capturedImage }) => {
 
     return (
         <div>
-            <h2>Detected Objects:</h2>
+            <h2>Detected Food Items:</h2>
            
 
            
            
             {loading ? (
+
+
+
                 <p>Detecting objects...</p>
             ) : (
                 <ul>
                      {Object.entries(countObjectQuantity()).map(([object, quantity]) => (
                         <li key={object}>
-                            {object} - Quantity: {quantity} - Total Price: ${objectPrices[object] * quantity}
+                            {object} - Quantity: {quantity} - Price: ${objectPrices[object] * quantity}
                         </li>
                     ))}
                 </ul>
