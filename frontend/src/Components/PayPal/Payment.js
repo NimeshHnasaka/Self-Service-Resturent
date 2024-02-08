@@ -1,46 +1,28 @@
 
-
-
 import React, { useEffect, useState } from 'react';
 
 const Payment = ({ totalBill, referenceNumber }) => {
     const [paymentSuccess, setPaymentSuccess] = useState(false);
     const [paymentError, setPaymentError] = useState(null);
 
-    useEffect(() => {
-        // Load the PayPal script when the component mounts
-        const addPayPalScript = () => {
+    const initializePayPalSDK = async () => {
+        try {
             const script = document.createElement('script');
-            script.src = `https://www.paypal.com/sdk/js?client-id=AWG795VHTb_d1tsRKfMZ4_-K2J93C5fy_pTV5Vgz99igeQJTQXgcZOuosUyqoKDkydCllw1R4uf95tPv`;
-            script.addEventListener('load', () => {
-                // Once the script is loaded, initialize the PayPal buttons
-                window.paypal.Buttons({
-                    createOrder: (data, actions) => {
-                        return actions.order.create({
-                            purchase_units: [{
-                                amount: {
-                                    value: totalBill
-                                }
-                            }]
-                        });
-                    },
-                    onApprove: async (data, actions) => {
-                        const order = await actions.order.capture();
-                        // Handle payment success
-                        handlePaymentSuccess(order);
-                    },
-                    onError: (err) => {
-                        // Handle payment error
-                        handlePaymentError(err);
-                    }
-                }).render('#paypal-button-container');
-            });
+            script.src = `https://www.paypal.com/sdk/js?client-id=AWG795VHTb_d1tsRKfMZ4_-K2J93C5fy_pTV5Vgz99igeQJTQXgcZOuosUyqoKDkydCllw1R4uf95tPv&currency=USD`;
+            script.async = true;
+            script.onload = () => {
+                initializePayPalButtons();
+            };
             document.body.appendChild(script);
-        };
+        } catch (error) {
+            console.error('Failed to load PayPal SDK:', error);
+            setPaymentError('Failed to load PayPal SDK. Please try again later.');
+        }
+    };
 
-        addPayPalScript();
+    useEffect(() => {
+        initializePayPalSDK();
 
-        // Clean up function to remove the PayPal script when the component unmounts
         return () => {
             const script = document.querySelector('script[src^="https://www.paypal.com/sdk/js"]');
             if (script) {
@@ -49,30 +31,48 @@ const Payment = ({ totalBill, referenceNumber }) => {
         };
     }, [totalBill]);
 
-    // Function to handle payment success
+    const initializePayPalButtons = () => {
+        window.paypal
+            .Buttons({
+                createOrder: (data, actions) => {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: totalBill,
+                                currency_code: 'USD'
+                            }
+                        }]
+                    });
+                },
+                onApprove: async (data, actions) => {
+                    const order = await actions.order.capture();
+                    handlePaymentSuccess(order);
+                },
+                onError: (err) => {
+                    handlePaymentError(err);
+                }
+            })
+            .render('#paypal-button-container');
+    };
+
     const handlePaymentSuccess = (order) => {
         console.log("Payment successful!");
         console.log(order);
-        // Update payment success state
         setPaymentSuccess(true);
-
-        // Reload the page after a short delay
         setTimeout(() => {
             window.location.reload();
-        }, 4000); // Adjust the delay as needed
+        }, 4000); // Reload the page after a short delay
     };
 
-    // Function to handle payment failure
     const handlePaymentError = (err) => {
         console.error("Payment failed:", err);
-        // Update payment error state
-        setPaymentError(err);
+        setPaymentError('Payment failed. Please try again later.');
     };
 
-    // Function to retry payment
     const retryPayment = () => {
         setPaymentSuccess(false);
         setPaymentError(null);
+        initializePayPalSDK(); // Re-initialize PayPal SDK
     };
 
     return (
@@ -84,7 +84,7 @@ const Payment = ({ totalBill, referenceNumber }) => {
             {paymentSuccess && <p>Payment Successful!</p>}
             {paymentError && (
                 <div>
-                    <p>Payment Failed. Please try again later.</p>
+                    <p>{paymentError}</p>
                     <button onClick={retryPayment}>Retry Payment</button>
                 </div>
             )}
