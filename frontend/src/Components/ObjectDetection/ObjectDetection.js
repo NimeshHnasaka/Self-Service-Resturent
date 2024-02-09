@@ -1,10 +1,12 @@
 
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import React, { useEffect, useState } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as cocoSsd from '@tensorflow-models/coco-ssd';
 import TotalBill from '../TotalBill/TotalBill';
+import './ObjectDetection.css'
 
 const ObjectDetection = ({ capturedImage }) => {
     const [detectedObjects, setDetectedObjects] = useState([]);
@@ -67,45 +69,47 @@ const ObjectDetection = ({ capturedImage }) => {
         return objectQuantity;
     };
 
-    // // Function to calculate total bill
-    // const calculateTotalBill = (objectQuantity) => {
-    //     let bill = 0;
-    //     for (const object in objectQuantity) {
-    //         bill += objectPrices[object] * objectQuantity[object];
-    //     }
-    //     return bill;
-    // };
-
+  
    
 
     return (
-        <div className='Object-Detection-Container'>
-            {showTotalBill ? (
-                <TotalBill detectedObjects={detectedObjects} objectQuantity={objectQuantity} />
+        <div className='capture-image-container'>
+        {showTotalBill ? (
+          <TotalBill detectedObjects={detectedObjects} objectQuantity={objectQuantity} />
+        ) : (
+          <div className="capture-form">
+            {loading ? (
+              <div className="loading-container">
+               
+              
+                <h1 className="loading-text"> Detecting Food Items</h1>
+                <h1 className="loading-text"> Loading...</h1>
+                <FontAwesomeIcon icon={faSpinner} spin size="3x" />
+              </div>
             ) : (
-                <div>
-                    <h1>Object Detection Component</h1>
-                    {capturedImage && (
-                        <div className="CapturedImageContainer">
-                            <h2>Captured Image:</h2>
-                            <img src={capturedImage} alt="Captured" />
-                        </div>
-                    )}
-                    <h2>Detected Objects:</h2>
-                    {loading ? (
-                        <p>Detecting objects...</p>
-                    ) : (
-                        <ul>
-                            {Object.entries(objectQuantity).map(([object, quantity]) => (
-                                <li key={object}>
-                                    {object} - Quantity: {quantity}
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </div>
+              <>
+                {capturedImage && (
+                  <div className="webcam-container">
+                    <h2 className="header">Your Food Tray</h2>
+                   
+                    <img src={capturedImage} alt="Captured" className="webcam" />
+                  </div>
+                )}
+                <h2 className="header">Detected Food Items</h2>
+                <ul className="object-list">
+                  {Object.entries(objectQuantity).map(([object, quantity]) => (
+                    <li key={object} className="object-list-item">
+                      {object} - Quantity: {quantity}
+                    </li>
+                  ))}
+                </ul>
+            <h1>Calculating Total Bill</h1>
+                <FontAwesomeIcon icon={faSpinner} spin size="3x" />
+              </>
             )}
-        </div>
+          </div>
+        )}
+      </div>
     );
 };
 

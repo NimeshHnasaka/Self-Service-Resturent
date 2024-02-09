@@ -2,16 +2,18 @@
 
 import React, { useState } from 'react';
 import Payment from '../PayPal/Payment'; // Assuming Payment component is imported correctly
-
+import './TotalBill.css'
 const TotalBill = ({ objectQuantity }) => {
     const [orderConfirmed, setOrderConfirmed] = useState(false);
 
     // Mapping of detected objects to prices
     const objectPrices = {
-        tv: 1.5,
-        keyboard: 0.75,
+       
         donut: 10.00,
-        pizza: 20.00
+        pizza: 20.00,
+        "hot dog":15.00,
+        "dining table":0,
+
         // Add more objects and their prices as needed
     };
 
@@ -51,26 +53,26 @@ const TotalBill = ({ objectQuantity }) => {
     };
 
     return (
-        <>
+        <div>
             {!orderConfirmed ? (
-                <div>
-                    <h1>Total Bill </h1>
-                    <h2>Food Items</h2>
-                    <ul>
-                        {Object.entries(objectQuantity).map(([object, quantity]) => (
-                            <li key={object}>
-                                {object} -  Price: ${objectPrices[object]} - Quantity: {quantity} - Total: ${(quantity * objectPrices[object]).toFixed(2)}
-                            </li>
-                        ))}
-                    </ul>
-                    <h2>Total Bill: ${totalBill}</h2>
-                    <p>Reference Number: {referenceNumber}</p>
-                    <button onClick={handleConfirmClick}>Confirm My Order</button>
-                </div>
-            ) : (
-                <Payment totalBill={totalBill} referenceNumber={referenceNumber} />
-            )}
-        </>
+    <div className="total-bill-container">
+        <h1 className="total-bill-title">Total Bill </h1>
+        <h2 className="total-bill-title">Food Items</h2>
+        <ul className="total-bill-list">
+            {Object.entries(objectQuantity).map(([object, quantity]) => (
+                <li key={object}>
+                    {object} -  Price: ${objectPrices[object]} - Quantity: {quantity} - Total: ${(quantity * objectPrices[object]).toFixed(2)}
+                </li>
+            ))}
+        </ul>
+        <h2 className="total-bill-title">Total Bill: ${totalBill}</h2>
+        {/* <p>Reference Number: {referenceNumber}</p> */}
+        <button className="confirm-button" onClick={handleConfirmClick}>Confirm Your Order</button>
+    </div>
+) : (
+    <Payment totalBill={totalBill} referenceNumber={referenceNumber} />
+)}
+        </div>
     );
 };
 

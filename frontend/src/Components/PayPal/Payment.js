@@ -1,5 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
+import "./Payment.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 const Payment = ({ totalBill, referenceNumber }) => {
     const [paymentSuccess, setPaymentSuccess] = useState(false);
@@ -76,19 +79,24 @@ const Payment = ({ totalBill, referenceNumber }) => {
     };
 
     return (
-        <div>
-            <h2>Payment Information</h2>
-            <p>Total Bill: ${totalBill}</p>
-            <p>Reference Number: {referenceNumber}</p>
-            <div id="paypal-button-container"></div>
-            {paymentSuccess && <p>Payment Successful!</p>}
-            {paymentError && (
-                <div>
-                    <p>{paymentError}</p>
-                    <button onClick={retryPayment}>Retry Payment</button>
-                </div>
-            )}
+        <div className="payment-information-container">
+    <h2 className="payment-title">Payment Information</h2>
+    <p className="total-bill">Total Bill: ${totalBill}</p>
+    <p className="reference-number">Reference Number: {referenceNumber}</p>
+    <div id="paypal-button-container" className="paypal-button-container"></div>
+    {paymentSuccess && (
+        <p className="payment-success">
+            <FontAwesomeIcon icon={faCheckCircle} className="success-icon" />
+            Payment Successful!
+        </p>
+    )}
+    {paymentError && (
+        <div className="payment-error-container">
+            <p className="payment-error">{paymentError}</p>
+            <button className="retry-payment-button" onClick={retryPayment}>Retry Payment</button>
         </div>
+    )}
+</div>
     );
 };
 
